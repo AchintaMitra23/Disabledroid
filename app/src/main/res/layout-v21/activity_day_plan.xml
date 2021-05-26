@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DayPlanActivity"
+    android:background="@drawable/wallpaper4">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:padding="10dp"
+        android:text="@string/day_planner"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/title"
+        android:layout_marginHorizontal="15dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/tv_saved_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
+        android:padding="10dp"
+        android:text="@string/show_saved_plans"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:fontFamily="@font/andika"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:onClick="showPlans"/>
+
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/calenderView"
+        android:layout_below="@+id/tv_saved_plan"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="25dp"
+        android:background="@drawable/alert_background"
+        android:elevation="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calenderView"
+        android:id="@+id/show_date_tv"
+        android:text="@string/please_select_a_date_from_calender"
+        android:textColor="@android:color/holo_red_light"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:paddingVertical="5dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/day_planner_et"
+        app:errorEnabled="true"
+        android:layout_below="@+id/show_date_tv"
+        android:layout_marginVertical="25dp"
+        android:visibility="invisible"
+        android:layout_marginHorizontal="20dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/enter_your_plan"
+            android:inputType="text"
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="15dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/add_day_plan"
+        android:onClick="addDayPlan"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_baseline_add_24"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:contentDescription="@string/todo"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

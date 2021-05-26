@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Disabledroid</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="display_header">User Information</string>
+    <string name="about_header">About Application</string>
+
+    <!-- Messages Preferences -->
+    <string name="user_name">Write Your Name Here</string>
+    <string name="gender_title">Choose Your Gender</string>
+    <string name="user_email">Write Your Email ID</string>
+    <string name="user_mobile">Write Your Mobile No.</string>
+    <string name="language_title">Choose Your Language</string>
+
+    <!-- Sync Preferences -->
+    <string name="adult">Are you above 18</string>
+    <string name="help_title">Is this helpful ??? </string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+
+    <string name="welcome_to_disabledroid">WELCOME TO DISABLEDROID</string>
+    <string name="please_authenticate_your_finger_before_use">Please authenticate your finger before use</string>
+    <string name="place_your_finger_on_sensor">Place Your Finger On Sensor</string>
+    <string name="please_wait_until_we_redirect">Please wait until we redirect...</string>
+    <string name="todo">TODO</string>
+    <string name="day_planner">DAY PLANNER</string>
+    <string name="save_update_or_delete_your_task_to_stay_in_tune_regularly_and_properly">Save, Update or Delete your task to stay in tune regularly and properly.</string>
+    <string name="todo_list">TODO LIST</string>
+    <string name="current_location">CURRENT LOCATION</string>
+    <string name="plan_your_daily_and_updated_things_sequentially_amp_cordially_gradually"><![CDATA[Plan your daily and updated things sequentially & cordially gradually.]]></string>
+    <string name="application_dashboard">APPLICATION DASHBOARD</string>
+    <string name="view_your_current_location_and_updated_about_your_nearby_areas_on_daily_basis">View your current location and updated about your nearby areas on daily basis.</string>
+    <string name="to_do_list">TO-DO LIST</string>
+    <string name="saved_location">Saved Location</string>
+    <string name="saved_plan">Saved Plan</string>
+    <string name="show_saved_plans">Show Saved Plans</string>
+    <string name="update_delete_the_task">Update / Delete the Task</string>
+    <string name="update_task">Update Task</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="update_delete_the_plan">Update / Delete the Plan</string>
+    <string name="delete_plan">Delete Plan</string>
+    <string name="enter_the_plan_here">Enter the plan here</string>
+    <string name="update_the_plan">Update the Plan</string>
+    <string name="update_plan">Update Plan</string>
+    <string name="please_select_a_date_from_calender">Please Select a Date from Calender</string>
+    <string name="enter_your_plan">Enter Your Plan</string>
+    <string name="how_are_you">How Are You ?</string>
+    <string name="chat_bot">Chat With Bot</string>
+    <string name="hello">Hello</string>
+    <string name="ask_or_say">Ask or Say</string>
+</resources>

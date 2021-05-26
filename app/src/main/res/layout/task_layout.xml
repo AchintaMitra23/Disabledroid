@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/how_are_you"
+    android:textSize="15sp"
+    android:textStyle="bold"
+    android:textColor="@color/black"
+    android:background="@drawable/textview_background"
+    android:paddingVertical="7.5dp"
+    android:fontFamily="@font/andika"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    android:paddingHorizontal="20dp">
+
+</CheckedTextView>

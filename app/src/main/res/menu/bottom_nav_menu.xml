@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Settings"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/navigation_chat_bot"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="Chat Bot"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/navigation_share"
+        android:icon="@drawable/ic_baseline_share_24"
+        android:title="Share"
+        android:visible="true"/>
+
+</menu>

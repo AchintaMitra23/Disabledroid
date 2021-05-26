@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FingerprintActivity"
+    android:background="@drawable/wallpaper3">
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/andika"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/welcome_to_disabledroid"
+        android:textAlignment="center"
+        android:textColor="@color/teal_200"
+        android:textSize="22.5sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/authenticate_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/head"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/acme"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/please_authenticate_your_finger_before_use"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="17.5sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/fingerprint"
+        android:id="@+id/fingerprint"
+        android:layout_below="@+id/authenticate_msg"
+        android:layout_marginVertical="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fingerprint"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/bubblegum_sans"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/place_your_finger_on_sensor"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/progress"
+        android:layout_above="@id/foot"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        app:SpinKit_Color="@color/white"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/cantora_one"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/please_wait_until_we_redirect"
+        android:textAlignment="center"
+        android:textColor="@color/teal_200"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+</RelativeLayout>

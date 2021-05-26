@@ -1,0 +1,27 @@
+<resources>
+    <!-- List Preference -->
+    <string-array name="gender_entries">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="gender_values">
+        <item>male</item>
+        <item>female</item>
+        <item>others</item>
+    </string-array>
+
+
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>German</item>
+        <item>Portuguese</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>english</item>
+        <item>german</item>
+        <item>portuguese</item>
+    </string-array>
+</resources>

@@ -1,0 +1,62 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/display_header">
+
+        <EditTextPreference
+            app:key="name"
+            app:title="@string/user_name"
+            app:useSimpleSummaryProvider="true"
+            android:icon="@drawable/ic_baseline_person_24"/>
+
+        <EditTextPreference
+            app:key="emial"
+            app:title="@string/user_email"
+            app:useSimpleSummaryProvider="true"
+            android:icon="@drawable/ic_baseline_email_24"/>
+
+        <EditTextPreference
+            app:key="mobile"
+            app:title="@string/user_mobile"
+            app:useSimpleSummaryProvider="true"
+            android:icon="@drawable/ic_baseline_phone_24"/>
+
+        <SwitchPreferenceCompat
+            app:key="adult"
+            app:title="@string/adult" />
+
+        <ListPreference
+            app:defaultValue="Select your gender"
+            app:entries="@array/gender_entries"
+            app:entryValues="@array/gender_values"
+            app:key="gender"
+            app:title="@string/gender_title"
+            app:useSimpleSummaryProvider="true"
+            android:icon="@drawable/ic_baseline_transgender_24"/>
+
+        <ListPreference
+            app:defaultValue="Select your language"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="language"
+            app:title="@string/language_title"
+            app:useSimpleSummaryProvider="true"
+            android:icon="@drawable/ic_baseline_language_24"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/about_header">
+
+        <SwitchPreferenceCompat
+            app:key="useful"
+            app:title="@string/help_title" />
+
+        <SeekBarPreference
+            app:key="rate"
+            android:title="Rate this app"
+            android:icon="@drawable/ic_baseline_star_rate_24" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
