@@ -47,8 +47,6 @@
         android:background="@android:color/holo_green_dark"
         android:layout_above="@+id/et_ask"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
         android:src="@drawable/ic_baseline_mic_24"
         android:id="@+id/float_add_chat"
         android:onClick="float_add_chat"
@@ -61,6 +59,7 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         android:id="@+id/et_ask"
+        android:elevation="10dp"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="20dp">
         <com.google.android.material.textfield.TextInputEditText

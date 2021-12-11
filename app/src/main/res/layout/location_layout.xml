@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MultiAutoCompleteTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/how_are_you"
@@ -12,6 +13,7 @@
     android:fontFamily="@font/andika"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="10dp"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    tools:ignore="LabelFor">
 
 </MultiAutoCompleteTextView>

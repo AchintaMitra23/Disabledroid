@@ -1,13 +1,9 @@
 package com.example.disabledroid;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -16,10 +12,13 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.speech.tts.TextToSpeech;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.disabledroid.JavaClasses.FingerprintHandler;
 import com.github.ybq.android.spinkit.sprite.Sprite;
@@ -44,50 +43,41 @@ import javax.crypto.SecretKey;
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FingerprintActivity extends AppCompatActivity {
 
-    private TextView mStatus, goStatus;
-    private ImageView mFingerprint;
-    private ProgressBar progressBar;
+    private TextView mStatus;
     private TextToSpeech textToSpeech;
-
-    private FingerprintManager fingerprintManager;
-    private KeyguardManager keyguardManager;
 
     private KeyStore keyStore;
     private Cipher cipher;
-    private String KEY_NAME = "AndroidKey";
+    private final String KEY_NAME = "AndroidKey";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fingerprint);
 
-        mFingerprint = findViewById(R.id.fingerprint);
         mStatus = findViewById(R.id.status);
-        goStatus = findViewById(R.id.foot);
 
-        progressBar = (ProgressBar)findViewById(R.id.progress);
+        ProgressBar progressBar = findViewById(R.id.progress);
         Sprite doubleBounce = new DoubleBounce();
         progressBar.setIndeterminateDrawable(doubleBounce);
 
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.getDefault());
+        textToSpeech = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = textToSpeech.setLanguage(Locale.getDefault());
 
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
-                        Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
-                }
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+                    Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
             }
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-            keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
 
             if (!fingerprintManager.isHardwareDetected()) {
                 mStatus.setText("Fingerprint Scanner is not Detected");

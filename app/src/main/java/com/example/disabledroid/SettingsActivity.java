@@ -1,11 +1,9 @@
 package com.example.disabledroid;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {

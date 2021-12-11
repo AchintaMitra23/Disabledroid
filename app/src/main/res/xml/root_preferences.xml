@@ -10,7 +10,7 @@
             android:icon="@drawable/ic_baseline_person_24"/>
 
         <EditTextPreference
-            app:key="emial"
+            app:key="email"
             app:title="@string/user_email"
             app:useSimpleSummaryProvider="true"
             android:icon="@drawable/ic_baseline_email_24"/>

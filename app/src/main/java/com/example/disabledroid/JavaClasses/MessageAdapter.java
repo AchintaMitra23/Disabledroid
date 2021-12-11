@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.CustomViewHolder> {
 
-    private List<ResponseMessage> responseMessageList;
+    private final List<ResponseMessage> responseMessageList;
 
     public MessageAdapter(List<ResponseMessage> responseMessageList) {
         this.responseMessageList = responseMessageList;
@@ -42,7 +42,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.CustomVi
         return responseMessageList.size();
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder {
+    static class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -10,7 +10,6 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:padding="10dp"
         android:text="@string/to_do_list"
@@ -37,8 +36,7 @@
         android:layout_marginTop="10dp"
         android:closeIcon="@drawable/ic_baseline_close_24"
         android:nestedScrollingEnabled="true"
-        android:isScrollContainer="true"
-        tools:targetApi="lollipop">
+        android:isScrollContainer="true">
         <requestFocus/>
     </androidx.appcompat.widget.SearchView>
     <View
@@ -59,14 +57,12 @@
         android:paddingHorizontal="10dp"
         android:nestedScrollingEnabled="true"
         android:dividerHeight="10.0dp"
-        android:divider="@android:color/transparent"
-        tools:targetApi="lollipop" />
+        android:divider="@android:color/transparent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@android:color/holo_green_dark"
@@ -74,8 +70,6 @@
         android:onClick="add_voice_task"
         android:src="@drawable/ic_baseline_mic_24"
         android:contentDescription="@string/todo"
-        android:layout_marginEnd="30dp"
-        tools:targetApi="lollipop"
         tools:ignore="ContentDescription" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -83,7 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@android:color/holo_green_dark"
@@ -91,7 +84,5 @@
         android:onClick="add_text_task"
         android:src="@drawable/ic_baseline_add_24"
         android:contentDescription="@string/todo"
-        android:layout_marginEnd="30dp"
-        tools:targetApi="lollipop"
         tools:ignore="ContentDescription" />
 </RelativeLayout>

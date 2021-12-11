@@ -1,10 +1,5 @@
 package com.example.disabledroid;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -14,16 +9,17 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
@@ -44,19 +40,16 @@ public class MapActivity extends AppCompatActivity {
         googleMap = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.getDefault());
+        textToSpeech = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = textToSpeech.setLanguage(Locale.getDefault());
 
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
-                        Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
-                }
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+                    Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -102,33 +95,22 @@ public class MapActivity extends AppCompatActivity {
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    googleMap.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull GoogleMap googleMap) {
-                            try {
-                                Geocoder geocoder = new Geocoder(MapActivity.this, Locale.getDefault());
-                                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                                MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are at : " + addresses.get(0).getAddressLine(0));
-                                textToSpeech.speak("You are at : " + addresses.get(0).getAddressLine(0), TextToSpeech.QUEUE_FLUSH, null);
-                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                                googleMap.addMarker(markerOptions);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
+        task.addOnSuccessListener(location -> {
+            if (location != null) {
+                googleMap.getMapAsync(googleMap -> {
+                    try {
+                        Geocoder geocoder = new Geocoder(MapActivity.this, Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are at : " + addresses.get(0).getAddressLine(0));
+                        textToSpeech.speak("You are at : " + addresses.get(0).getAddressLine(0), TextToSpeech.QUEUE_FLUSH, null);
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                        googleMap.addMarker(markerOptions);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MapActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(MapActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

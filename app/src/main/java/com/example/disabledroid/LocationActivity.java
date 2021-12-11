@@ -1,11 +1,5 @@
 package com.example.disabledroid;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,7 +7,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,20 +16,22 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.example.disabledroid.SQLiteDatabase.DatabaseLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class LocationActivity extends AppCompatActivity {
 
@@ -61,19 +56,16 @@ public class LocationActivity extends AppCompatActivity {
         databaseLocation = new DatabaseLocation(this);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.getDefault());
+        textToSpeech = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = textToSpeech.setLanguage(Locale.getDefault());
 
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
-                        Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
-                }
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+                    Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -140,17 +132,12 @@ public class LocationActivity extends AppCompatActivity {
                             textToSpeech.speak(addr.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
 
                             boolean checkInsertion = databaseLocation.insertLocation(addresses.get(0).getAddressLine(0));
-                            if (checkInsertion == true)
+                            if (checkInsertion)
                                 Toast.makeText(LocationActivity.this, "Location is saved", Toast.LENGTH_SHORT).show();
                             else
                                 Toast.makeText(LocationActivity.this, "Location is not saved", Toast.LENGTH_SHORT).show();
 
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startActivity(new Intent(getApplicationContext(), SavedLocationActivity.class));
-                                }
-                            }, 2000);
+                            new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), SavedLocationActivity.class)), 2000);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -179,16 +166,11 @@ public class LocationActivity extends AppCompatActivity {
                                     textToSpeech.speak(addr.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
 
                                     boolean checkInsertion = databaseLocation.insertLocation(addresses.get(0).getAddressLine(0));
-                                    if (checkInsertion == true)
+                                    if (checkInsertion)
                                         Toast.makeText(LocationActivity.this, "Location is saved", Toast.LENGTH_SHORT).show();
                                     else
                                         Toast.makeText(LocationActivity.this, "Location is not saved", Toast.LENGTH_SHORT).show();
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            startActivity(new Intent(getApplicationContext(), SavedLocationActivity.class));
-                                        }
-                                    }, 2000);
+                                    new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), SavedLocationActivity.class)), 2000);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -207,12 +189,7 @@ public class LocationActivity extends AppCompatActivity {
                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
                     }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(LocationActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            }).addOnFailureListener(e -> Toast.makeText(LocationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
         } else {
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }

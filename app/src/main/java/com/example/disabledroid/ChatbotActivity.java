@@ -1,27 +1,26 @@
 package com.example.disabledroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.disabledroid.JavaClasses.MessageAdapter;
 import com.example.disabledroid.JavaClasses.ResponseMessage;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ChatbotActivity extends AppCompatActivity {
 
@@ -32,6 +31,7 @@ public class ChatbotActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private TextToSpeech textToSpeech;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +40,16 @@ public class ChatbotActivity extends AppCompatActivity {
         et_msg = findViewById(R.id.et_ask);
         recycle = findViewById(R.id.recycle);
 
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.getDefault());
+        textToSpeech = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = textToSpeech.setLanguage(Locale.getDefault());
 
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
-                        Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
-                }
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+                    Toast.makeText(getApplicationContext(), "Language not supported", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Language is supported", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Initialization failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -61,23 +58,20 @@ public class ChatbotActivity extends AppCompatActivity {
         recycle.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recycle.setAdapter(messageAdapter);
 
-        et_msg.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    ResponseMessage msg1 = new ResponseMessage(et_msg.getEditText().getText().toString(), true);
-                    responseMessageList.add(msg1);
-                    ResponseMessage msg2 = new ResponseMessage(response(et_msg.getEditText().getText().toString()), false);
-                    responseMessageList.add(msg2);
-                    et_msg.getEditText().setText("");
-                    messageAdapter.notifyDataSetChanged();
+        Objects.requireNonNull(et_msg.getEditText()).setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                ResponseMessage msg1 = new ResponseMessage(et_msg.getEditText().getText().toString(), true);
+                responseMessageList.add(msg1);
+                ResponseMessage msg2 = new ResponseMessage(response(et_msg.getEditText().getText().toString()), false);
+                responseMessageList.add(msg2);
+                et_msg.getEditText().setText("");
+                messageAdapter.notifyDataSetChanged();
 
-                    textToSpeech.speak(msg2.getText(), TextToSpeech.QUEUE_FLUSH, null);
+                textToSpeech.speak(msg2.getText(), TextToSpeech.QUEUE_FLUSH, null);
 
-                    if(!isVisible()) recycle.smoothScrollToPosition(messageAdapter.getItemCount()-1);
-                }
-                return true;
+                if(isVisible()) recycle.smoothScrollToPosition(messageAdapter.getItemCount()-1);
             }
+            return true;
         });
     }
 
@@ -92,14 +86,15 @@ public class ChatbotActivity extends AppCompatActivity {
 
     public boolean isVisible() {
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recycle.getLayoutManager();
+        assert linearLayoutManager != null;
         int position = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-        int current = recycle.getAdapter().getItemCount();
+        int current = Objects.requireNonNull(recycle.getAdapter()).getItemCount();
 
-        return (position>=current);
+        return (position < current);
     }
 
     public String response(String ipStr) {
-        String retStr = null;
+        String retStr;
         switch (ipStr) {
             case "Hi" :
             case "hi" :
@@ -122,7 +117,7 @@ public class ChatbotActivity extends AppCompatActivity {
                 retStr = "Have a nice day! Thank u :)";
                 break;
             default :
-                retStr = ipStr.toString();
+                retStr = ipStr;
         }
         return retStr;
     }
@@ -139,6 +134,7 @@ public class ChatbotActivity extends AppCompatActivity {
             Toast.makeText(ChatbotActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
@@ -152,7 +148,7 @@ public class ChatbotActivity extends AppCompatActivity {
 
                 textToSpeech.speak(msg2.getText(), TextToSpeech.QUEUE_FLUSH, null);
 
-                if(!isVisible()) recycle.smoothScrollToPosition(messageAdapter.getItemCount()-1);
+                if(isVisible()) recycle.smoothScrollToPosition(messageAdapter.getItemCount()-1);
             }
         }
     }

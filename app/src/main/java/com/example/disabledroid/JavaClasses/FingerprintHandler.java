@@ -53,12 +53,9 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         super.onAuthenticationSucceeded(result);
         this.update("AUTHENTICATION DONE", true);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                context.startActivity(new Intent(context.getApplicationContext(), MainActivity.class));
-                ((Activity)context).finish();
-            }
+        new Handler().postDelayed(() -> {
+            context.startActivity(new Intent(context.getApplicationContext(), MainActivity.class));
+            ((Activity)context).finish();
         }, 1000);
     }
 
@@ -68,7 +65,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         ProgressBar progressBar = ((Activity)context).findViewById(R.id.progress);
         TextView goStatus = ((Activity)context).findViewById(R.id.foot);
         status.setText(s);
-        if (b == false) {
+        if (!b) {
             status.setTextColor(Color.RED);
             finger.setImageResource(R.mipmap.fail);
         } else {

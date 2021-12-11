@@ -1,23 +1,18 @@
 package com.example.disabledroid;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -35,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navView.setOnNavigationItemSelectedListener(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -62,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             startActivity(Intent.createChooser(shareIntent, "Share By :- "));
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,21 +94,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
             if (resultCode == RESULT_OK && data != null) {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if (result.get(0).equals("open to do list")) {
-                    View view = LayoutInflater.from(this).inflate(R.layout.activity_todo, null);
-                    todo(view);
-                } else if (result.get(0).equals("open current location")) {
-                    View view = LayoutInflater.from(this).inflate(R.layout.activity_location, null);
-                    location(view);
-                } else if (result.get(0).equals("open day planner")) {
-                    View view = LayoutInflater.from(this).inflate(R.layout.activity_day_plan, null);
-                    day_planner(view);
-                } else if (result.get(0).equals("open settings")) {
-                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                } else if (result.get(0).equals("open chatbot")) {
-                    startActivity(new Intent(getApplicationContext(), ChatbotActivity.class));
-                } else if (result.get(0).equals("shareit")) {
-                    shareApp();
+                switch (result.get(0)) {
+                    case "open to do list": {
+                        @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.activity_todo, null);
+                        todo(view);
+                        break;
+                    }
+                    case "open current location": {
+                        @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.activity_location, null);
+                        location(view);
+                        break;
+                    }
+                    case "open day planner": {
+                        @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.activity_day_plan, null);
+                        day_planner(view);
+                        break;
+                    }
+                    case "open settings":
+                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                        break;
+                    case "open chatbot":
+                        startActivity(new Intent(getApplicationContext(), ChatbotActivity.class));
+                        break;
+                    case "shareit":
+                        shareApp();
+                        break;
                 }
             }
         }

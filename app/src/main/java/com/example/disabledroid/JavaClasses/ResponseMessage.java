@@ -3,10 +3,7 @@ package com.example.disabledroid.JavaClasses;
 public class ResponseMessage {
 
     private String text;
-    private boolean isMe;
-
-    public ResponseMessage() {
-    }
+    private final boolean isMe;
 
     public ResponseMessage(String text, boolean isMe) {
         this.text = text;
@@ -25,7 +22,4 @@ public class ResponseMessage {
         return isMe;
     }
 
-    public void setMe(boolean me) {
-        isMe = me;
-    }
 }
