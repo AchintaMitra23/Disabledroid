@@ -13,8 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Disabledroid"
-        android:fullBackupContent="">
+        android:theme="@style/Theme.Disabledroid">
         <activity android:name=".ChatbotActivity" />
         <activity android:name=".SavedPlanActivity" />
         <activity android:name=".SavedLocationActivity" />
@@ -23,7 +22,7 @@
         <activity android:name=".DayPlanActivity" />
         <activity android:name=".TodoActivity" />
         <activity android:name=".FingerprintActivity"
-            android:exported="TODO">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
